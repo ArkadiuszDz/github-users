@@ -8,7 +8,9 @@
         <h2> {{ user_info.name }} </h2>
         <p> ID: {{ user_info.id }} </p>
         <div class="repos-wrapper">
-
+          <ul class="repos-list">
+            <Repo v-for="repo in user_repos" :key="repo.name" :language="repo.language" :forks="repo.forks" :watchers="repo.watchers" :name="repo.name" :clone="repo.clone_url" :created="repo.created_at" :updated="repo.updated_at" :pushed="repo.pushed_at"/>
+          </ul>
         </div>
     </div>
   </div>
@@ -16,12 +18,20 @@
 <script>
 import getUser from '../assets/scripts/getUser'
 import getRepos from '../assets/scripts/getRepos'
+import Repo from '@/components/Repo'
 
 export default {
   name: 'UserPage',
   methods: {
     getUser,
-    getRepos
+    getRepos,
+    toggleView () {
+      console.log(this)
+      this.visible = !this.visible
+    }
+  },
+  components: {
+    Repo
   },
   created () {
     getUser(this.$route.params.name).then(response => {
@@ -29,12 +39,14 @@ export default {
     })
     getRepos(this.$route.params.name).then(response => {
       this.user_repos = [...response]
+      console.log(this.user_repos)
     })
   },
   data () {
     return {
       user_info: '',
-      user_repos: []
+      user_repos: [],
+      visible: false
     }
   }
 }
@@ -51,8 +63,8 @@ export default {
   .avatar-img-wrapper img {
     width: 100%;
   }
-  .user:hover {
-
+  .repos-list {
+    padding: 10px;
   }
   .user-wrapper {
 
