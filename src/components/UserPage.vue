@@ -34,12 +34,11 @@ export default {
     Repo
   },
   created () {
-    getUser(this.$route.params.name).then(response => {
+    getUser(this.$route.params.login).then(response => {
       this.user_info = response
     })
-    getRepos(this.$route.params.name).then(response => {
+    getRepos(this.$route.params.login).then(response => {
       this.user_repos = [...response]
-      console.log(this.user_repos)
     })
   },
   data () {

@@ -1,7 +1,10 @@
 <template>
   <div class="user-wrapper">
     <div class="user">
-      <a href="./users/ArkadiuszDz"><img :src="user.avatar_url" /></a> <span>{{ user.login }}</span>
+      <router-link :to="{ name: 'UserPage', params: { login: user.login }}">
+        <img :src="user.avatar_url" />
+      </router-link>
+      <span>{{ user.login }}</span>
     </div>
   </div>
 </template>
