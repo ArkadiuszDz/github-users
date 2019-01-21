@@ -2,15 +2,22 @@
   <div class="user-info-wrapper">
     <div class="user">
         <div class="avatar-img-wrapper">
-            <img :src="user_info.avatar_url" alt="avatar"/>
+          <img :src="user_info.avatar_url" alt="avatar"/>
         </div>
         <h1> {{ user_info.login }} </h1>
         <h2> {{ user_info.name }} </h2>
         <p> ID: {{ user_info.id }} </p>
+        <p> Public repos: {{ user_info.public_repos }} </p>
         <div class="repos-wrapper">
-          <ul class="repos-list">
-            <Repo v-for="repo in user_repos" :key="repo.name" :language="repo.language" :forks="repo.forks" :watchers="repo.watchers" :name="repo.name" :clone="repo.clone_url" :created="repo.created_at" :updated="repo.updated_at" :pushed="repo.pushed_at"/>
-          </ul>
+          <div class="repos-list-content column1">
+            <Repo v-for="repo in col1" :key="repo.name" :language="repo.language" :forks="repo.forks" :watchers="repo.watchers" :name="repo.name" :clone="repo.clone_url" :created="repo.created_at" :updated="repo.updated_at" :pushed="repo.pushed_at"/>
+          </div>
+          <div class="repos-list-content column2">
+            <Repo v-for="repo in col2" :key="repo.name" :language="repo.language" :forks="repo.forks" :watchers="repo.watchers" :name="repo.name" :clone="repo.clone_url" :created="repo.created_at" :updated="repo.updated_at" :pushed="repo.pushed_at"/>
+          </div>
+          <div class="repos-list-content column3">
+            <Repo v-for="repo in col3" :key="repo.name" :language="repo.language" :forks="repo.forks" :watchers="repo.watchers" :name="repo.name" :clone="repo.clone_url" :created="repo.created_at" :updated="repo.updated_at" :pushed="repo.pushed_at"/>
+          </div>
         </div>
     </div>
   </div>
@@ -26,12 +33,40 @@ export default {
     getUser,
     getRepos,
     toggleView () {
-      console.log(this)
       this.visible = !this.visible
     }
   },
   components: {
     Repo
+  },
+  computed: {
+    col1 () {
+      let array = []
+      this.user_repos.forEach((e, i) => {
+        if ((i + 0) % 3 === 0) {
+          array.push(e)
+        }
+      })
+      return array
+    },
+    col2 () {
+      let array = []
+      this.user_repos.forEach((e, i) => {
+        if ((i + 1) % 3 === 0) {
+          array.push(e)
+        }
+      })
+      return array
+    },
+    col3 () {
+      let array = []
+      this.user_repos.forEach((e, i) => {
+        if ((i + 2) % 3 === 0) {
+          array.push(e)
+        }
+      })
+      return array
+    }
   },
   created () {
     getUser(this.$route.params.login).then(response => {
@@ -62,16 +97,13 @@ export default {
   .avatar-img-wrapper img {
     width: 100%;
   }
-  .repos-list {
+  .repos-list-content {
     padding: 10px;
+    width: 30%;
   }
-  .user-wrapper {
-
-  }
-  img {
-
-  }
-  span {
-
+  .repos-wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: center;
   }
 </style>

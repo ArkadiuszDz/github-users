@@ -19,6 +19,7 @@ export default {
   created () {
     getUsers().then(response => {
       this.github_users = [...response]
+      console.log(this.github_users)
     })
   },
   data () {
