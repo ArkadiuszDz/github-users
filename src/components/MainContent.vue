@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="container">
     <h1>{{ msg }}</h1>
     <UsersList :users="github_users"/>
   </div>
@@ -16,11 +16,12 @@ export default {
   methods: {
     getUsers,
     scrollHandler () {
-      console.log('scrolling')
+      if (window.innerHeight + window.scrollY > document.body.offsetHeight) {
+        // this.addNewUsers() dodać zmienną, która spowoduje wywołanie metody raz
+      }
     },
     addNewUsers () {
-      getUsers(this.github_users.length + 1).then(response => {
-        console.log(response)
+      getUsers(this.github_users[this.github_users.length - 1].id).then(response => {
         this.github_users = this.github_users.concat([...response])
       })
     }
@@ -28,8 +29,12 @@ export default {
   created () {
     getUsers().then(response => {
       this.github_users = [...response]
+      this.addNewUsers()
     })
     window.addEventListener('scroll', this.scrollHandler)
+  },
+  destroy () {
+    window.removeEventListener('scroll', this.scrollHandler)
   },
   data () {
     return {
