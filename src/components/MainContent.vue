@@ -16,13 +16,15 @@ export default {
   methods: {
     getUsers,
     scrollHandler () {
-      if (window.innerHeight + window.scrollY > document.body.offsetHeight) {
-        // this.addNewUsers() dodać zmienną, która spowoduje wywołanie metody raz
+      if ((window.innerHeight + window.scrollY >= document.body.offsetHeight - 5) && this.addUsers) {
+        this.addNewUsers()
+        this.addUsers = false
       }
     },
     addNewUsers () {
       getUsers(this.github_users[this.github_users.length - 1].id).then(response => {
         this.github_users = this.github_users.concat([...response])
+        this.addUsers = true
       })
     }
   },
@@ -39,7 +41,8 @@ export default {
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
-      github_users: []
+      github_users: [],
+      addUsers: true
     }
   }
 }
