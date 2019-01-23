@@ -20,7 +20,6 @@ export default {
   props: ['language', 'forks', 'watchers', 'name', 'created', 'updated', 'pushed', 'clone'],
   methods: {
     toggleView () {
-      console.log(this)
       this.visible = !this.visible
     }
   },

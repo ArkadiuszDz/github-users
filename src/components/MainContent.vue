@@ -14,13 +14,22 @@ export default {
     UsersList
   },
   methods: {
-    getUsers
+    getUsers,
+    scrollHandler () {
+      console.log('scrolling')
+    },
+    addNewUsers () {
+      getUsers(this.github_users.length + 1).then(response => {
+        console.log(response)
+        this.github_users = this.github_users.concat([...response])
+      })
+    }
   },
   created () {
     getUsers().then(response => {
       this.github_users = [...response]
-      console.log(this.github_users)
     })
+    window.addEventListener('scroll', this.scrollHandler)
   },
   data () {
     return {
