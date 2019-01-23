@@ -35,7 +35,7 @@ export default {
     })
     window.addEventListener('scroll', this.scrollHandler)
   },
-  destroy () {
+  destroyed () {
     window.removeEventListener('scroll', this.scrollHandler)
   },
   data () {

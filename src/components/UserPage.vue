@@ -34,6 +34,12 @@ export default {
     getRepos,
     toggleView () {
       this.visible = !this.visible
+    },
+    addMoreRepos () {
+      console.log(Math.ceil(this.user_info.public_repos / 100))
+    },
+    scrollHandler () {
+      this.addMoreRepos()
     }
   },
   components: {
@@ -75,6 +81,10 @@ export default {
     getRepos(this.$route.params.login).then(response => {
       this.user_repos = [...response]
     })
+    window.addEventListener('scroll', this.scrollHandler)
+  },
+  destroyed () {
+    window.removeEventListener('scroll', this.scrollHandler)
   },
   data () {
     return {

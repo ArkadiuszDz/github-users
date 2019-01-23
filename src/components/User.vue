@@ -1,11 +1,11 @@
 <template>
   <div class="user-wrapper">
-    <div class="user">
-      <router-link :to="{ name: 'UserPage', params: { login: user.login }}">
+    <router-link :to="{ name: 'UserPage', params: { login: user.login }}">
+      <div class="user">
         <img :src="user.avatar_url" />
-      </router-link>
-      <span>{{ user.login }}</span>
-    </div>
+        <span>{{ user.login }}</span>
+      </div>
+    </router-link>
   </div>
 </template>
 <script>
@@ -43,5 +43,8 @@ export default {
   span {
     font-weight: bold;
     padding: 10px;
+  }
+  .user-wrapper a {
+    text-decoration: none;
   }
 </style>

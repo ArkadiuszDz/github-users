@@ -2,7 +2,7 @@
   <div class="users-list">
     <h1>{{ msg }}</h1>
     <div class="users-list-content">
-        <User v-for="user in users" :key="user.login" :user="user"/>
+      <User v-for="user in users" :key="user.login" :user="user"/>
     </div>
   </div>
 </template>
