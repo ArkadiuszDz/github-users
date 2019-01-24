@@ -36,10 +36,17 @@ export default {
       this.visible = !this.visible
     },
     addMoreRepos () {
-      console.log(Math.ceil(this.user_info.public_repos / 100))
+      getRepos(this.$route.params.login, this.page).then(response => {
+        this.user_repos = this.user_repos.concat([...response])
+        this.page++
+        this.addRepos = true
+      })
     },
     scrollHandler () {
-      this.addMoreRepos()
+      if ((window.innerHeight + window.scrollY >= document.body.offsetHeight - 5) && (Math.ceil(this.user_info.public_repos / 100) >= 2) && this.addRepos) {
+        this.addMoreRepos()
+        this.addRepos = false
+      }
     }
   },
   components: {
@@ -90,7 +97,9 @@ export default {
     return {
       user_info: '',
       user_repos: [],
-      visible: false
+      visible: false,
+      addRepos: true,
+      page: 2
     }
   }
 }
